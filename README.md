@@ -38,4 +38,10 @@ Reject Limit 依照 **0, 5, 10 rounding rule** 自動調整。
 ---
 
 ## 📂 File Structure (專案結構)
-
+ccit-method-validation/
+│
+├── ccit_analysis.py # 主程式
+├── data/
+│ └── ccit_raw_data-1.csv
+├── ccit_data.db # 自動生成的 SQLite 資料庫
+└── README.md
