@@ -4,18 +4,18 @@ import matplotlib.pyplot as plt
 import sqlite3
 
 # -----------------------------
-# 1️⃣ 匯入資料
+# 1️⃣ import data
 # -----------------------------
 df = pd.read_csv("ccit_raw_data-1.csv", encoding="utf-8-sig")
 
 # -----------------------------
-# 2️⃣ 清理資料
+# 2️⃣ data cleaning
 # -----------------------------
 df = df.drop_duplicates()
 df = df.dropna(subset=['Test ID. (Samples)', 'Cycle 2_Pa'])
 
 # -----------------------------
-# 3️⃣ 統一欄位名稱
+# 3️⃣ field name standardization
 # -----------------------------
 df.rename(columns={
     'Test No.': 'Test_No',
@@ -28,13 +28,13 @@ df.rename(columns={
 }, inplace=True)
 
 # -----------------------------
-# 4️⃣ 型態轉換
+# 4️⃣ type transformation
 # -----------------------------
 df['Test_ID'] = df['Test_ID'].astype(float, errors='ignore')
 df['Cycle2_Pa'] = pd.to_numeric(df['Cycle2_Pa'], errors='coerce')
 
 # -----------------------------
-# 5️⃣ 樣本分類
+# 5️⃣ sample classification
 # -----------------------------
 def classify_sample(x):
     if x in [0.1, 0.5]:
@@ -47,7 +47,7 @@ def classify_sample(x):
 df['Type'] = df['Test_ID'].apply(classify_sample)
 
 # -----------------------------
-# 6️⃣ 移除 Negative SPL >3σ 異常值
+# 6️⃣ removed the outlier Negative SPL >3σ 
 # -----------------------------
 neg = df[df['Type'] == 'Negative SPL'].copy()
 neg_mean_orig = neg['Cycle2_Pa'].mean()
@@ -58,14 +58,14 @@ neg_clean = neg[abs(neg['Cycle2_Pa'] - neg_mean_orig) <= 3*neg_std_orig].copy()
 df_clean = pd.concat([df[df['Type'] != 'Negative SPL'], neg_clean])
 
 # -----------------------------
-# 7️⃣ 計算方法參數上下限
+# 7️⃣ cauculated the limit of parameter
 # -----------------------------
 # Cycle1_mbar
 cycle1_mbar_mean = neg_clean['Cycle1_mbar'].mean()
 cycle1_mbar_lower = cycle1_mbar_mean - 50
 cycle1_mbar_upper = cycle1_mbar_mean + 50
 
-# Cycle1_Pa & Cycle2_mbar 固定值
+# Cycle1_Pa & Cycle2_mbar (stable)
 cycle1_pa_lower, cycle1_pa_upper = -5, 50
 cycle2_mbar_lower, cycle2_mbar_upper = 0, 10
 
@@ -94,7 +94,7 @@ reject_limit_upper = adjust_to_0_5_10((pos_mean + cycle2_pa_upper)/2)
 reject_limit_lower = -5
 
 # -----------------------------
-# 8️⃣ 整理方法參數表格
+# 8️⃣ organize the method parameter table
 # -----------------------------
 limits = pd.DataFrame({
     "Parameter": ["Cycle1_mbar", "Cycle1_Pa", "Cycle2_mbar", "Cycle2_Pa", "Reject Limit"],
@@ -102,7 +102,7 @@ limits = pd.DataFrame({
     "Upper Limit": [cycle1_mbar_upper, cycle1_pa_upper, cycle2_mbar_upper, cycle2_pa_upper, reject_limit_upper]
 })
 
-# 顯示表格（有框線）
+#  showed the table (with line)
 from tabulate import tabulate
 print("✅ Result：")
 print(tabulate(limits, headers='keys', tablefmt='fancy_grid', showindex=False))
@@ -110,7 +110,7 @@ print(tabulate(limits, headers='keys', tablefmt='fancy_grid', showindex=False))
 
 
 # -----------------------------
-# 9️⃣ 繪製管制圖
+# 9️⃣ plot a control chart
 # -----------------------------
 plt.figure(figsize=(14,6))
 
@@ -135,21 +135,7 @@ plt.grid(True)
 plt.show()
 
 # -----------------------------
-# 8️⃣ 整理方法參數表格
-# -----------------------------
-limits = pd.DataFrame({
-    "Parameter": ["Cycle 1 Test Vac", "Cycle 1 Diff Vac", "Cycle 2 Test Vac", "Cycle 2 Diff Vac"],
-    "Min": [cycle1_mbar_lower, cycle1_pa_lower, cycle2_mbar_lower, reject_limit_lower],
-    "Max": [cycle1_mbar_upper, cycle1_pa_upper, cycle2_mbar_upper, reject_limit_upper]
-})
-
-# 顯示表格（有框線）
-from tabulate import tabulate
-print("✅ Reject References：")
-print(tabulate(limits, headers='keys', tablefmt='fancy_grid', showindex=False))
-
-# -----------------------------
-# 🔟 匯出至 SQLite (SQLife3)
+# 🔟 export to SQLite (SQLife3)
 # -----------------------------
 conn = sqlite3.connect("ccit_data.db")
 df_clean.to_sql("ccit_table", conn, if_exists="replace", index=False)
