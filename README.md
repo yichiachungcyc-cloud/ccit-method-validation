@@ -6,7 +6,7 @@
 ## 📊 Sample Output
 
 ### 🔹 CCIT Control Chart (Cycle2_Pa)
-plt.savefig("assets/control_chart.png", dpi=300, bbox_inches='tight')
+
 👉 Automatically generated control chart with:
 - Mean line  
 - ±3σ limits  
@@ -17,7 +17,6 @@ plt.savefig("assets/control_chart.png", dpi=300, bbox_inches='tight')
 
 ### 🔹 Method Validation Result
 
-![Validation Table](./assets/validation_table.png)
 
 👉 Automatically calculated parameter limits using statistical rules and GMP-style rounding logic  
 
@@ -119,7 +118,7 @@ ccit-method-validation/
 │
 ├── ccit_analysis.py
 ├── data/
-├── assets/ plt.savefig("assets/control_chart.png", dpi=300, bbox_inches='tight')
+├── assets/ 
 │ ├── control_chart.png
 │ └── validation_table.png
 ├── ccit_data.db
