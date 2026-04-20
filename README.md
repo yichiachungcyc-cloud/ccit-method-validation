@@ -6,9 +6,7 @@
 ## 📊 Sample Output
 
 ### 🔹 CCIT Control Chart (Cycle2_Pa)
-
-[Control Chart](./assets/control_chart.png)
-
+plt.savefig("assets/control_chart.png", dpi=300, bbox_inches='tight')
 👉 Automatically generated control chart with:
 - Mean line  
 - ±3σ limits  
