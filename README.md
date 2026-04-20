@@ -7,7 +7,7 @@
 
 ### 🔹 CCIT Control Chart (Cycle2_Pa)
 
-![Control Chart](./assets/control_chart.png)
+[Control Chart](./assets/control_chart.png)
 
 👉 Automatically generated control chart with:
 - Mean line  
