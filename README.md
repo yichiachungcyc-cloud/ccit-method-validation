@@ -6,7 +6,7 @@
 ## 📊 Sample Output
 
 ### 🔹 CCIT Control Chart (Cycle2_Pa)
-
+![Control Chart](./assets/control_chart.png)
 👉 Automatically generated control chart with:
 - Mean line  
 - ±3σ limits  
@@ -17,7 +17,7 @@
 
 ### 🔹 Method Validation Result
 
-
+![Validation Table](./assets/validation_table.png)
 👉 Automatically calculated parameter limits using statistical rules and GMP-style rounding logic  
 
 ---
@@ -118,6 +118,7 @@ ccit-method-validation/
 │
 ├── ccit_analysis.py
 ├── data/
+│   └── ccit_raw_data-1.csv
 ├── assets/ 
 │ ├── control_chart.png
 │ └── validation_table.png
