@@ -1,47 +1,128 @@
-# ccit-method-validation
-CCIT data cleaning, anomaly removal, 3σ filtering, reject limit calculation, and control chart automation using Python, pandas, numpy, matplotlib and SQLite.
-# CCIT Method Validation & Control Chart Automation
-
-This project performs **data cleaning**, **3σ anomaly removal**, **reject limit calculation**,  
-and **automated CCIT control chart generation** using Python, pandas, numpy, matplotlib, and SQLite.
+# CCIT Method Validation & Control Chart Automation  
+**Data Analytics Project | Pharmaceutical Quality Control (GMP)**
 
 ---
 
-## 📦 Features (功能)
+## 📊 Sample Output
 
-### ✔ 1. Data Cleaning & Preprocessing
-- 移除重複與缺失值
-- 統一欄位名稱
-- 自動識別 System Check / Positive SPL / Negative SPL
+### 🔹 CCIT Control Chart (Cycle2_Pa)
 
-### ✔ 2. Negative SPL 3σ Anomaly Removal
-- Negative SPL 使用 3 標準差濾除異常點  
-- 清洗後數據作為方法參數計算依據
+![Control Chart](./assets/control_chart.png)
 
-### ✔ 3. CCIT Method Limit Calculation
-自動計算：
-- Cycle 1 Test Vac 範圍  
-- Cycle 1 Diff Vac 範圍  
-- Cycle 2 Test Vac 固定參數  
-- Cycle 2 Diff Vac：3σ 以及 Reject Limit  
-Reject Limit 依照 **0, 5, 10 rounding rule** 自動調整。
-
-### ✔ 4. CCIT Control Chart
-- 自動繪製 Negative SPL、Positive SPL、System Check 的散點管制圖
-- 載入 +3σ、平均線、Reject Limit
-- 對同一 Test_ID 自動加入 jitter（避免重疊）
-
-### ✔ 5. Export to SQLite
-- 自動匯出清理後資料至 `ccit_data.db`
-- 可搭配 SQLife3 / DBeaver / DB Browser SQLite 檢視
+👉 Automatically generated control chart with:
+- Mean line  
+- ±3σ limits  
+- Reject limit  
+- Jittered data points to avoid overlap  
 
 ---
 
-## 📂 File Structure (專案結構)
+### 🔹 Method Validation Result
+
+![Validation Table](./assets/validation_table.png)
+
+👉 Automatically calculated parameter limits using statistical rules and GMP-style rounding logic  
+
+---
+
+## 📌 Project Overview
+
+This project demonstrates how data analytics can be applied in a **GMP-regulated pharmaceutical environment** to improve:
+
+- Method validation  
+- Anomaly detection  
+- Process monitoring  
+
+The solution automates CCIT data analysis, reducing manual workload and enabling **data-driven QC decision-making**.
+
+---
+
+## 🎯 Business Problem
+
+In pharmaceutical QC environments:
+
+- Manual CCIT analysis is time-consuming and error-prone  
+- Outlier handling lacks consistency  
+- No standardized reject limit calculation  
+- Limited real-time monitoring  
+
+👉 Resulting in risk to:
+- Product quality decisions  
+- GMP compliance  
+- OOS/OOT investigation efficiency  
+
+---
+
+## 💡 Solution
+
+Built an **end-to-end data analysis pipeline** using Python:
+
+- Data cleaning & preprocessing  
+- 3σ anomaly detection  
+- Method validation automation  
+- Control chart generation  
+- SQLite database integration  
+
+---
+
+## 🛠️ Tech Stack
+
+- Python (pandas, numpy)  
+- matplotlib (visualization)  
+- SQLite (data storage)  
+
+---
+
+## 🔍 Key Features
+
+### ✔ Data Cleaning
+- Removed duplicates and missing values  
+- Standardized column names  
+
+---
+
+### ✔ 3σ Anomaly Detection
+- Applied statistical filtering to Negative SPL  
+- Improved consistency in outlier handling  
+
+---
+
+### ✔ Method Validation
+- Automated parameter limit calculation  
+- Implemented **0–5–10 rounding rule**  
+
+---
+
+### ✔ Control Chart Automation
+- Generated charts for:
+  - Negative SPL  
+  - Positive SPL  
+  - System Check  
+
+---
+
+### ✔ Database Export
+- Stored processed data in SQLite  
+- Ready for BI tools integration  
+
+---
+
+## 📊 Business Impact
+
+- Reduced manual data processing time  
+- Improved consistency in QC decision-making  
+- Enhanced visibility of process trends  
+- Strengthened GMP data integrity  
+
+---
+
+## 📂 Project Structure
 ccit-method-validation/
 │
-├── ccit_analysis.py # 主程式
+├── ccit_analysis.py
 ├── data/
-│ └── ccit_raw_data-1.csv
-├── ccit_data.db # 自動生成的 SQLite 資料庫
+├── assets/ plt.savefig("assets/control_chart.png", dpi=300, bbox_inches='tight')
+│ ├── control_chart.png
+│ └── validation_table.png
+├── ccit_data.db
 └── README.md
